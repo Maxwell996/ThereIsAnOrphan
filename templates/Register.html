@@ -1,0 +1,75 @@
+{% extends 'login_reg_base.html' %}
+{% block main %}
+	<div class="box" style="margin-top: 50px">
+		<h2>Register</h2>
+		<form action="{% url 'register' %}" method="post">
+			<div class="inputBox">
+				<input id="inputID" type="text" name="num" required="">
+				<label >UserID</label>
+                <span class="checkname"></span>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="password" required="">
+				<label >Password</label>
+			</div>
+            <div class="inputBox">
+				<input type="text" name="name" required="">
+				<label >Name</label>
+			</div>
+            <div class="inputBox">
+				<input type="text" name="gender" required="">
+				<label >Gender</label>
+			</div>
+            <div class="inputBox">
+				<input type="text" name="age" required="">
+				<label >Age</label>
+			</div>
+            <div class="inputBox">
+				<input type="text" name="major" required="">
+				<label >Major</label>
+			</div>
+
+			<div class="inputBox" style="margin-bottom: -10px;">
+				<select name="type">
+					<option value="1">学生</option>
+					<option value="2">教师</option>
+				</select>
+				<label>Type</label>
+			</div>
+            <a href="{% url 'login'%}">
+                <button class="btn" type="button">Return
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </a>
+            <a href="{% url 'login'%}">
+                <button class="btn" type="submit" style="margin-left: 110px;">OK
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </a>
+		</form>
+	</div>
+    <script type="text/javascript">
+        $(function () {
+            $('#inputID').focus(function () {
+                $('#inputID').val("").css('color','#fff')
+            })
+            $('#inputID').blur(function () {      //在失焦的时候判断输入是否正确
+                var num = $(this).val()
+                $.get('{% url 'CheckID' %}',{username:num},function (data) {   //第一个参数是路由;第二个是发送数据（字典),类似get请求
+                                                                                         // ;第三个是回调函数,data表示服务器响应的结果
+                    if(data == 'ok'){
+                        $('#inputID').css('color','green')
+                    }
+                    else
+                        $('#inputID').val(num+"            用户已存在").css('color','red')
+                })
+            })
+        })
+    </script>
+{% endblock %}

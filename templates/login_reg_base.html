@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script type="text/javascript"  src="{% static 'js/jquery.js' %}"></script>
+
+</head>
+<body>
+{#	<h1 class="slogen1">教不教的好，是我们的本事</h1>#}
+	{% block main %}
+    {% endblock %}
+{#	<h1 class="slogen2">抢不抢得到，是你们的<span style="color: #03e9f4;">缘分</span></h1>#}
+</body>
+</html>
