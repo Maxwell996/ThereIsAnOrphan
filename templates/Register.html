@@ -1,6 +1,6 @@
 {% extends 'login_reg_base.html' %}
 {% block main %}
-	<div class="box" style="margin-top: 50px">
+	<div class="box" style="margin-top: 40px">
 		<h2>Register</h2>
 		<form action="{% url 'register' %}" method="post">
 			<div class="inputBox">
@@ -25,16 +25,12 @@
 				<label >Age</label>
 			</div>
             <div class="inputBox">
-				<input type="text" name="major" required="">
-				<label >Major</label>
+				<input type="text" name="position" required="">
+				<label >Position</label>
 			</div>
-
-			<div class="inputBox" style="margin-bottom: -10px;">
-				<select name="type">
-					<option value="1">学生</option>
-					<option value="2">教师</option>
-				</select>
-				<label>Type</label>
+            <div class="inputBox">
+				<input type="text" name="tele" required="">
+				<label >Telephone</label>
 			</div>
             <a href="{% url 'login'%}">
                 <button class="btn" type="button">Return

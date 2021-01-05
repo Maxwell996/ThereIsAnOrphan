@@ -9,6 +9,11 @@
 			background-size:100% 100%;
 			/*position: relative;*/
 		}
+		.clearfix:after{
+			content: "";
+			display: block;
+			clear: both;
+		}
 		.box{
 			position: absolute;
 			top: 45%;

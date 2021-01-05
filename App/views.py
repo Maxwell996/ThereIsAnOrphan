@@ -18,9 +18,61 @@ def login(request):
         rep.delete_cookie('Password')
         rep.delete_cookie('error')
         return rep
+    else:
+        username = request.POST.get('num',None)
+        password = request.POST.get('password',None)
+        type = request.POST.get('type',None)
+        user = auth.authenticate(username = username,password = password)
+        if user is not None and user.is_active:
+            if(type == '1' and len(models.Employee.objects.filter(num=username))!=0):
+                auth.login(request,user)
+                return HttpResponse("ok")
+            elif (type == '2' and User.objects.get(username=username).is_superuser == True):
+                auth.login(request,user)
+                return HttpResponse("ok")
+            return render(request, 'Login.html', {'num': username, 'password': password, 'type_error': 'red'})
+        else:
+            return render(request, 'Login.html', {'num': username, 'else_error': 'red'})
 
 def register(request):
-    return render(request,'Register.html')
-
+    if request.method == 'GET':
+        return render(request,'Register.html')
+    else:
+        num = request.POST.get('num',None)
+        password = request.POST.get('password', None)
+        name = request.POST.get('name', None)
+        gender = request.POST.get('gender',None)
+        age = request.POST.get('age',None)
+        position = request.POST.get('position',None)
+        tele = request.POST.get('tele',None)
+        user_info = {
+            'username':num,
+            'password':make_password(password),
+            'is_active':1,
+            'is_superuser':0,
+            'is_staff':0
+        }
+        user = User.objects.create(**user_info)
+        staff_info = {
+            'num':num,
+            'password':password,
+            'name':name,
+            'gender':gender,
+            'age':age,
+            'position':position,
+            'tele':tele
+        }
+        staff = models.Employee.objects.create(**staff_info)
+        rep = HttpResponseRedirect(reverse('login'))
+        rep.set_cookie('UserNum',num)
+        rep.set_cookie('Password',password)
+        return rep
 def CheckID(request):
-    return HttpResponse('ok')
+    username = request.GET.get('username')
+    message = 'ok'
+    try:
+        res = User.objects.get(username=username)
+        message = '用户名已存在'
+    except:
+        pass
+    return HttpResponse(message)
